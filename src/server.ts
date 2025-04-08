@@ -2,6 +2,9 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/database";
 import path from "path";
+import cors from "cors";
+import morgan from "morgan";
+import bodyParser from "body-parser";
 import userRoutes from './routes/user';
 
 // Load environment variables from .env
@@ -12,6 +15,18 @@ const app: Application = express();
 
 // Middleware to parse JSON requests
 app.use(express.json());
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Log HTTP requests (in 'dev' format: method + status + response time)
+app.use(morgan("dev"));
+
+// Parse incoming JSON requests
+app.use(bodyParser.json());
+
+// Optionally parse URL-encoded data
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 connectDB();
