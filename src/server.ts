@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 connectDB();
 
 // Routes
-app.use("/api/user", userRoutes);
+app.use("/waitlist-api/user", userRoutes);
 
 // Default route
 app.get("/", (req: Request, res: Response) => {

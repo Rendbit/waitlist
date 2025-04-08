@@ -13,13 +13,13 @@ const testEmail = "testEmail12@gmail.com";
 const testStellarPublicKey = "12";
 
 // Test route with the apiKeyValidator middleware
-app.post("/api/users/join-waitlist", apiKeyValidator, (req, res) => {
+app.post("/waitlist-api/user/join", apiKeyValidator, (req, res) => {
   res.status(200).json({ message: "Success" });
 });
 
 describe("apiKeyValidator Middleware", () => {
   it("should return 400 if no API key is provided", async () => {
-    const response = await request(app).post("/api/users/join-waitlist").send({
+    const response = await request(app).post("/waitlist-api/user/join").send({
       firstName: "John",
       lastName: "Doe",
       email: testEmail,
@@ -32,7 +32,7 @@ describe("apiKeyValidator Middleware", () => {
 
   it("should return 403 if the API key is invalid", async () => {
     const response = await request(app)
-      .post("/api/users/join-waitlist")
+      .post("/waitlist-api/user/join")
       .set("x-api-key", API_KEY + '1')
       .send({
         firstName: "John",
@@ -47,7 +47,7 @@ describe("apiKeyValidator Middleware", () => {
 
   it("should call next if the API key is valid", async () => {
     const response = await request(app)
-      .post("/api/users/join-waitlist")
+      .post("/waitlist-api/user/join")
       .set("x-api-key", API_KEY)
       .send({
         firstName: "John",

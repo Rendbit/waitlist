@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json()); // For parsing JSON request bodies
 
 // Set up route for the joinWaitlist controller
-app.post("/api/users/join-waitlist", joinWaitlist);
+app.post("/waitlist-api/user/join", joinWaitlist);
 
 const testEmail = "testEmail12@gmail.com";
 const testStellarPublicKey = "12";
@@ -21,7 +21,7 @@ describe("joinWaitlist Controller", () => {
   });
 
   it("should return 400 if any required field is missing", async () => {
-    const response = await request(app).post("/api/users/join-waitlist").send({
+    const response = await request(app).post("/waitlist-api/user/join").send({
       firstName: "John",
       lastName: "Doe",
       stellarPublicKey: testStellarPublicKey,
@@ -39,7 +39,7 @@ describe("joinWaitlist Controller", () => {
       stellarPublicKey: testStellarPublicKey,
     });
 
-    const response = await request(app).post("/api/users/join-waitlist").send({
+    const response = await request(app).post("/waitlist-api/user/join").send({
       firstName: "John",
       lastName: "Doe",
       email: testEmail,
@@ -61,7 +61,7 @@ describe("joinWaitlist Controller", () => {
       stellarPublicKey: testStellarPublicKey,
     });
 
-    const response = await request(app).post("/api/users/join-waitlist").send({
+    const response = await request(app).post("/waitlist-api/user/join").send({
       firstName: "John",
       lastName: "Doe",
       email: testEmail,
@@ -77,7 +77,7 @@ describe("joinWaitlist Controller", () => {
 
     User.create = jest.fn().mockRejectedValue(new Error("Some database error"));
 
-    const response = await request(app).post("/api/users/join-waitlist").send({
+    const response = await request(app).post("/waitlist-api/user/join").send({
       firstName: "John",
       lastName: "Doe",
       email: testEmail,

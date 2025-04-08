@@ -6,10 +6,10 @@ import { limiter } from '../middlewares/rateLimiter';
 const router = express.Router();
 
 /**
- * @route   POST /api/users/join-waitlist
+ * @route   POST /waitlist-api/user/join
  * @desc    Allows users to join the Rendbit waitlist
  * @access  Public
  */
-router.post('/join-waitlist', apiKeyValidator, limiter, joinWaitlist);
+router.post('/join', apiKeyValidator, limiter, joinWaitlist);
 
 export default router;
