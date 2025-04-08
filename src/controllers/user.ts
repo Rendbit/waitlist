@@ -6,7 +6,7 @@ import User from "../models/User";
  * @route   POST /api/users/join-waitlist
  * @access  Public
  */
-export const joinWaitlist: RequestHandler = async (req, res): Promise<any> => {
+export const joinWaitlist: RequestHandler = async (req: Request, res: Response): Promise<any> => {
   try {
     const { firstName, lastName, email, stellarPublicKey } = req.body;
 
@@ -39,8 +39,6 @@ export const joinWaitlist: RequestHandler = async (req, res): Promise<any> => {
       data: newUser,
     });
   } catch (error: any) {
-    console.error("Error joining waitlist:", error);
-
     if (error.name === "ValidationError") {
       return res.status(400).json({ message: "Invalid data provided." });
     }
