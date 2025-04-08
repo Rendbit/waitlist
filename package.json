@@ -1,0 +1,45 @@
+{
+  "name": "waitlist",
+  "version": "1.0.0",
+  "description": "Rendbit is a blockchain-powered platform built on Stellar, enabling seamless cross-border payments and an easy-to-use token launchpad for users across Africa—join the waitlist to be among the first to explore the future of decentralized finance.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rendbit/waitlist.git"
+  },
+  "keywords": [
+    "Rendbit",
+    "Waitlist",
+    "Africa",
+    "Stellar",
+    "Cross-border",
+    "Payments",
+    "Token",
+    "Launchpad",
+    "Blockchain"
+  ],
+  "author": "Mbaogu Charles Chiakpaoke (devcharlezen)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rendbit/waitlist/issues"
+  },
+  "homepage": "https://github.com/rendbit/waitlist#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
