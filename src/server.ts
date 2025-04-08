@@ -2,6 +2,7 @@ import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/database";
 import path from "path";
+import userRoutes from './routes/user';
 
 // Load environment variables from .env
 dotenv.config();
@@ -16,7 +17,7 @@ app.use(express.json());
 connectDB();
 
 // Routes
-// app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 // Default route
 app.get("/", (req: Request, res: Response) => {
