@@ -25,13 +25,6 @@ const userSchema: Schema = new Schema<IUser>(
       trim: true,
       index: true, // Adds index for faster query performance
     },
-    // Stellar public key for blockchain interaction
-    stellarPublicKey: {
-      type: String,
-      required: [true, 'Stellar public key is required'],
-      trim: true,
-      index: true, // Indexed to speed up lookups
-    },
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
@@ -43,7 +36,7 @@ const userSchema: Schema = new Schema<IUser>(
  * Enforces a unique constraint across both email and stellarPublicKey.
  * This ensures that the same combination cannot be registered twice.
  */
-userSchema.index({ email: 1, stellarPublicKey: 1 }, { unique: true });
+userSchema.index({ email: 1}, { unique: true });
 
 /**
  * Mongoose Model

@@ -8,16 +8,16 @@ import User from "../models/User";
  */
 export const joinWaitlist: RequestHandler = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { firstName, lastName, email, stellarPublicKey } = req.body;
+    const { firstName, lastName, email } = req.body;
 
     // Validate required fields
-    if (!firstName || !lastName || !email || !stellarPublicKey) {
+    if (!firstName || !lastName || !email ) {
       return res.status(400).json({ message: "All fields are required." });
     }
 
     // Check for existing user
     const existingUser = await User.findOne({
-      $or: [{ email }, { stellarPublicKey }],
+      $or: [{ email }],
     });
 
     if (existingUser) {
@@ -31,7 +31,6 @@ export const joinWaitlist: RequestHandler = async (req: Request, res: Response):
       firstName,
       lastName,
       email,
-      stellarPublicKey,
     });
 
     return res.status(201).json({
