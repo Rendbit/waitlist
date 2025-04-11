@@ -25,9 +25,58 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use("/waitlist-api/user", userRoutes);
 
+app.post("/waitlist-api/conversion-rates", async (req: any, res: any) => {
+  const { inputAmount, symbol } = req.body;
+
+  if (!inputAmount || !symbol) {
+    return res
+      .status(400)
+      .json({ message: "inputAmount and symbol are required" });
+  }
+
+  try {
+    const headers = {
+      "X-CMC_PRO_API_KEY": `${process.env.CMC_API_KEY}`,
+    };
+
+    // Get XLM rates in USD and NGN
+    const xlmUrl = `${process.env.CMC_API_URL}${symbol}`;
+    const xlmResponse = await fetch(xlmUrl, { headers });
+    const xlmData = await xlmResponse.json();
+
+    if (!xlmData.data || !xlmData.data.XLM) {
+      throw new Error("Failed to fetch XLM rates");
+    }
+
+    // Get USD to currency rate
+    const currencyUrl = `${process.env.EXCHANGE_RATE_URL}`;
+    const currencyResponse = await fetch(currencyUrl);
+    const currencyData = await currencyResponse.json();
+    const usdToCurrencyRate = currencyData.rates[symbol];
+
+    // Extract rates from CoinMarketCap response
+    const xlmToCurrency = xlmData.data.XLM.quote[symbol].price;
+
+    // Calculate inverse rates
+    const currencyToXlm = Number(inputAmount) / xlmToCurrency;
+
+    res.json({
+      xlmToCurrency,
+      currencyToXlm,
+      usdToCurrencyRate,
+    });
+  } catch (error: any) {
+    console.error("Error fetching conversion rates:", error);
+    res.status(500).json({
+      message: "Error fetching conversion rates",
+      error: error.message,
+    });
+  }
+});
+
 // Default route
 app.get("/api", (req: Request, res: Response) => {
-  res.send("Welcome to the Rendbit Waitlist API");
+  res.send("Welcome to the RendBit Waitlist API");
 });
 
 // Handle 404 (Not Found) — always JSON, never look for file
